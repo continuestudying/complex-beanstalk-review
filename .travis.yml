@@ -20,4 +20,4 @@ after_success:
   - docker push continuestudying/multi-client-review
   - docker push continuestudying/multi-nginx-review
   - docker push continuestudying/multi-server-review
-  - docker push continuestudying/multi-workder-review
+  - docker push continuestudying/multi-worker-review
