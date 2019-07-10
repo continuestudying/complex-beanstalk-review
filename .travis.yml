@@ -3,7 +3,7 @@ services:
   - docker
 before_install:
   # Build image for testing client
-  - docker build -t continuestudying/test-client ./client
+  - docker build -t continuestudying/test-client -f ./client/Dockerfile.dev ./client
 script:
   - docker run continuestudying/test-client npm test -- --coverage
 after_success:
