@@ -1,0 +1,23 @@
+sodu: require
+services:
+  - docker
+before_install:
+  # Build image for testing client
+  - docker build -t continuestudying/test-client ./client
+script:
+  - docker run continuestudying/test-client npm test -- --coverage
+after_success:
+  # Build images
+  - docker build -t continuestudying/multi-client-review ./client
+  - docker build -t continuestudying/multi-nginx-review ./nginx
+  - docker build -t continuestudying/multi-server-review ./server
+  - docker build -t continuestudying/multi-worker-review ./worker
+  
+  # Login Docker Hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+  # Push those images to Docker Hub
+  - docker push continuestudying/multi-client-review
+  - docker push continuestudying/multi-nginx-review
+  - docker push continuestudying/multi-server-review
+  - docker push continuestudying/multi-workder-review
